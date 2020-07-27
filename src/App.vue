@@ -1,28 +1,97 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Landing></Landing>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Landing from './components/Landing.vue'
+import animateScrollTo from 'animated-scroll-to';
+import jQuery from "jquery";
+import WOW from 'wow.js';
+
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+    components: {
+    Landing
+  },
+  watch: {
+    animateScrollTo() {
+      this.animateScrollTo();
+    },
+    wowJs() {
+      this.wowJs();
+    }
+  },
+  methods: {
+    animateScrollTo(){
+      
+      animateScrollTo(0).then(hasScrolledToPosition => {
+        // assada
+        if (hasScrolledToPosition) {
+          // sadasd
+        } else {
+          // asdasd
+        }
+      });
+    },
+    fixedMenu(){
+      (function($) {
+        $(window).bind('scroll', function() {
+        var navHeight = $( window ).height() - 30;
+
+        let heightNav1 = $('.header-nav').height();
+        let heightNav2 = $('.section1-nav').height();
+        let sumHeight = heightNav1+heightNav2;
+
+          if ($(window).scrollTop() > navHeight) {
+            $("body").css("padding-top",sumHeight);
+            $('.header-nav').addClass('fixed');
+            $('.section1-nav').addClass('fixed');
+            console.log(sumHeight);
+          }
+          else {
+            $("body").css("padding-top","0");
+            $('.header-nav').removeClass('fixed');
+            $('.section1-nav').removeClass('fixed');
+            // $('.section1-nav').removeClass('fixed');
+          }
+      });
+      })(jQuery);
+    },
+    animate_img() {
+      (function($)  {
+        $(".header-barrels").hover(function(){
+          $(this).find("img").addClass("animate__shakeY");
+          $(this).find("img").addClass("animate__animated");
+        },function(){
+          $(this).find("img").removeClass("animate__shakeY");
+          $(this).find("img").removeClass("animate__animated");
+        });
+      })(jQuery);
+    },
+    wowJs() {
+      new WOW().init();
+    }
+  },
+  create(){
+    this.animateScrollTo();
+    // this.wowJs();
+  },
+  mounted() {
+    this.animate_img();
+    this.animateScrollTo();
+    this.fixedMenu();
+    this.wowJs();
+
+    
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss" type="text/scss">
+  @import "./style/main.scss";
+  @import "./style/adaptive.scss";
+  @import "./style/animate.min.css";
 </style>
